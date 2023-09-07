@@ -1,0 +1,19 @@
+- hosts: host_a
+  become: true
+  gather_facts: false
+  become_method: sudo
+
+  roles:
+    - apt-update
+
+  tasks:
+
+    - name: Install Canonical Kubernetes
+      command: snap install microk8s --classic
+
+    - name: Add "user" to microk8s group
+      command: |
+        usermod -a -G microk8s user
+
+    - name: Create kubectl alias
+      command: sudo snap alias microk8s.kubectl kubectl

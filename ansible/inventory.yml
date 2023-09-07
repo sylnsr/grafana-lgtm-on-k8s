@@ -1,0 +1,18 @@
+all:
+  children:
+    host_a:
+      hosts:
+        10.0.1.236
+    host_b:
+      hosts:
+        10.0.1.151
+
+  vars:
+    ansible_connection: ssh
+    ansible_user: user
+    # defaults are used below - change as needed
+    ansible_ssh_pass: changeme
+    ansible_become_pass: changeme
+    minio_root_user: minio_user
+    minio_root_password: minio_pass
+
