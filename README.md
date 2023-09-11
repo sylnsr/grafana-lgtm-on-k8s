@@ -7,11 +7,15 @@ Grafana LGTM stack on Kubernetes for local evaluation / development.
 ### What's in this setup
 
 1. [Grafana LGTM stack](https://grafana.com/go/webinar/getting-started-with-grafana-lgtm-stack/)
-2. If you don't have a K8s environment, then we use [Microk8s in Ubuntu](https://microk8s.io/)
-3. [MinIO](https://microk8s.io/) is needed for storage.
+2. If you don't have a K8s environment, then you may want to consider setting one up with [Kind](https://kind.sigs.k8s.io/).
+3. [MinIO](https://microk8s.io/) is needed for storage. You may want to run it as a [container](https://hub.docker.com/r/minio/minio)
 
-# Intro
+### Steps
 
-I assume you have Helm 3.x and Ansible 2.15 or higher, and that you can execute `kubectl` commands in your K8s setup.
-If you don't have a K8s environment setup, then you could simply set one up in 2 Ubuntu virtual machines, by following
-the instructions in [`ubuntu-k8s-setup.md`](ubuntu-k8s-setup.md).
+I assume you can execute `kubectl` and `helm` commands in your K8s setup. On K8s control host, do the following:
+
+1. Add the Helm chart repo for Grafana: `helm repo add grafana https://grafana.github.io/helm-charts`
+2. Install Grafana from chart: `helm install grafana grafana/grafana`
+3. Install [Loki](https://grafana.com/docs/loki/latest/setup/install/helm/install-monolithic/) from chart: `helm install --values loki-helm-values.yml loki grafana/loki`
+4. Install [Tempo](https://grafana.com/docs/tempo/latest/setup/helm-chart/) from chart: `helm install tempo grafana/tempo`
+5. Install Mirmir from chart: `helm install mirmir grafana/mimir-distributed`
